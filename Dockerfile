@@ -6,7 +6,6 @@ RUN mkdir measurements
 
 WORKDIR  /var/printer/3d_printerCabin/measurements
 
-ADD readMeasurements.py ./
 
 RUN pip install pipreqs
 RUN python -m  pipreqs.pipreqs --encoding utf-8  /var/printer/3d_printerCabin/measurements
