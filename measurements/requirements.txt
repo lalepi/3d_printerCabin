@@ -1,0 +1,4 @@
+pyserial
+WiringPi
+gpiozero
+requests

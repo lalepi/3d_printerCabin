@@ -9,7 +9,15 @@ services:
     # devices:
     # use `python -m serial.tools.miniterm` to see what the name is of the printer, this requires pyserial
     #  - /dev/ttyACM0:/dev/ttyACM0
-    #  - /dev/video0:/dev/video0
+    #  - /dev/video0:/dev/video0devices:
+    environment:
+      - ENABLE_MJPG_STREAMER=true
+      - MJPG_STREAMER_INPUT=-r 1152x648 -f 10 -y
+      - CAMERA_DEV=/dev/video0
+
+    devices:
+      - /dev/Prusa:/dev/ttyACM1
+      - /dev/video0:/dev/video0
     volumes:
       - octoprint:/octoprint
     # uncomment the lines below to ensure camera streaming is enabled when
@@ -45,6 +53,8 @@ services:
       - TZ=Etc/UTC
     # ports:
     #   - "external:internal"
+    devices:
+      - /dev/UNO:/dev/ttyACM0
     volumes:
       - ./measurements:/usr/src/app
 
