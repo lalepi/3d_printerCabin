@@ -36,16 +36,17 @@ services:
     #  volumes:
     #    - octoprint:/octoprint
 
+
   python:
-  container_name: python
-  build: ./services/python/.
-  restart: unless-stopped
-  environment:
-    - TZ=Etc/UTC
-  # ports:
-  #   - "external:internal"
-  volumes:
-    - ./measurements/python/app:/usr/src/app
+    container_name: python
+    image: printercabinet
+    restart: unless-stopped
+    environment:
+      - TZ=Etc/UTC
+    # ports:
+    #   - "external:internal"
+    volumes:
+      - ./measurements:/usr/src/app
 
 volumes:
   octoprint:
