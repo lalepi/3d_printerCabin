@@ -130,7 +130,7 @@ def run_temperature_display(url):                           #Set lcd preferences
 print ()
 print ()
 
-serPort = '/dev/ttyACM0'
+serPort = '/dev/ttyACM1'
 baudRate = 115200
 ser = serial.Serial(serPort, baudRate, timeout=1)
 print ("Serial port " + serPort + " opened  Baudrate " + str(baudRate))
@@ -197,7 +197,7 @@ def write_to_file():
 #======================================
 
 if __name__ == '__main__':
-    ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
+    ser = serial.Serial('/dev/ttyACM1', 115200, timeout=1)
     ser.reset_input_buffer()
 
     while True:
