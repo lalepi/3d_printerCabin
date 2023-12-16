@@ -5,7 +5,7 @@ WORKDIR  /var/printer/3d_printerCabin
 RUN mkdir measurements
 
 WORKDIR  /var/printer/3d_printerCabin/measurements
-RUN touch requirements.txt
+
 RUN pip install pipreqs
 RUN python -m  pipreqs.pipreqs --encoding utf-8  /var/printer/3d_printerCabin/measurements
 RUN pip3 install -r requirements.txt
