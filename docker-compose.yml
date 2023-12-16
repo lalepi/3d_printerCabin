@@ -16,7 +16,7 @@ services:
       - CAMERA_DEV=/dev/video0
 
     devices:
-      - /dev/Prusa:/dev/ttyACM1
+      - /dev/Prusa:/dev/ttyACM0
       - /dev/video0:/dev/video0
     volumes:
       - octoprint:/octoprint
@@ -54,7 +54,7 @@ services:
     # ports:
     #   - "external:internal"
     devices:
-      - /dev/UNO:/dev/ttyACM0
+      - /dev/UNO:/dev/ttyACM1
     volumes:
       - ./measurements:/usr/src/app
 
