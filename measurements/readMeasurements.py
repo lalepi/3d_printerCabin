@@ -104,6 +104,8 @@ city = os.getenv('city')
 
 url = "https://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s&units=metric" % (city, api_key)  #Get city and units from api
 
+print("APi", api_key)
+print("city", city)
 
 def get_temperature(data):                                  #outside temp convert to float also determine under which topics data can be found in API request
     return '{:.2f}'.format(data["main"]["temp"]) + ' C'
@@ -113,6 +115,7 @@ def run_temperature_display(url):                           #Set lcd preferences
     while(True):                                            #constantly run request and save it to variable data
         response = requests.get(url)
         data = json.loads(response.text)
+        print(data)
 
         temp1 = get_temperature(data)
 
