@@ -2,3 +2,4 @@ pyserial
 WiringPi
 gpiozero
 requests
+python-dotenv
