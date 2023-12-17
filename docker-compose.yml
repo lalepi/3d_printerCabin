@@ -51,6 +51,8 @@ services:
     restart: unless-stopped
     environment:
       - TZ=Etc/UTC
+    env_file:
+      - .env
     # ports:
     #   - "external:internal"
     devices:
