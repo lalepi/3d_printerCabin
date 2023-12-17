@@ -29,11 +29,11 @@ def recvFromArduino():
     ck = ""
     x = "z" # any value that is not an end- or startMarker
     byteCount = -1 # to allow for the fact that the last increment will be one too many
-    print(x)
+    print("before ser.read", x)
     # wait for the start character
-    while  ord(x) != startMarker:
+    while ord(x) != startMarker:
         x = ser.read()
-        print(x)
+        print("after inputting ser.read", x)
 
     # save data until the end marker is found
     while ord(x) != endMarker:
