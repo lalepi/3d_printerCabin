@@ -173,10 +173,15 @@ print ("Serial port " + serPort + " opened  Baudrate " + str(baudRate))
 # VARIABLES
 #======================================
 
+specialCharacterMap =  {ord('ä'):'a'}
+
+
 startMarker = 60
 endMarker = 62
 start = "<"
-location = city
+location = city.translate(specialCharacterMap)
+
+
 
 #initialializing temp values
 
