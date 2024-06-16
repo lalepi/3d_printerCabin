@@ -58,6 +58,7 @@ def recvFromArduino():
     # save data until the end marker is found
     while True:
         x = ser.read()
+        print(x)
         if x:
             if ord(x) == endMarker:
                 break
