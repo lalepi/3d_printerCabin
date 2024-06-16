@@ -27,7 +27,7 @@ def recvFromArduino():
     global startMarker, endMarker
 
     ck = ""
-    x = "zgz" # any value that is not an end- or startMarker
+    x = "q" # any value that is not an end- or startMarker
     byteCount = -1 # to allow for the fact that the last increment will be one too many
     print("before ser.read", x)
     # wait for the start character
