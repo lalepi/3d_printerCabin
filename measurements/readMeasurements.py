@@ -26,21 +26,49 @@ from gpiozero import CPUTemperature
 def recvFromArduino():
     global startMarker, endMarker
 
+    # ck = ""
+    # x = "q" # any value that is not an end- or startMarker
+    # byteCount = -1 # to allow for the fact that the last increment will be one too many
+    # print("before ser.read", x)
+    # # wait for the start character
+    # while ord(x) != startMarker:
+    #     x = ser.read()
+    #     print("after inputting ser.read", x)
+
+    # # save data until the end marker is found
+    #     while ord(x) != endMarker:
+    #         if ord(x) != startMarker:
+    #             ck = ck + x.decode("utf-8") # change for Python3
+    #             byteCount += 1
+    #             x = ser.read()
+
     ck = ""
-    x = "q" # any value that is not an end- or startMarker
-    byteCount = -1 # to allow for the fact that the last increment will be one too many
-    print("before ser.read", x)
+    x = "q"  # any value that is not an end- or startMarker
+    byteCount = -1  # to allow for the fact that the last increment will be one too many
+
     # wait for the start character
-    while ord(x) != startMarker:
+    while True:
         x = ser.read()
-        print("after inputting ser.read", x)
+        if x:
+            if ord(x) == startMarker:
+                break
+            else:
+                print("Received unexpected character:", x)
 
     # save data until the end marker is found
-        while ord(x) != endMarker:
-            if ord(x) != startMarker:
-                ck = ck + x.decode("utf-8") # change for Python3
+    while True:
+        x = ser.read()
+        if x:
+            if ord(x) == endMarker:
+                break
+            elif ord(x) != startMarker:
+                ck += x.decode("utf-8")  # change for Python3
                 byteCount += 1
-                x = ser.read()
+        else:
+            print("No data received. Waiting for data...")
+
+
+
 
     return(ck)
 
