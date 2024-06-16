@@ -36,11 +36,11 @@ def recvFromArduino():
         print("after inputting ser.read", x)
 
     # save data until the end marker is found
-    while ord(x) != endMarker:
-        if ord(x) != startMarker:
-            ck = ck + x.decode("utf-8") # change for Python3
-            byteCount += 1
-        x = ser.read()
+        while ord(x) != endMarker:
+            if ord(x) != startMarker:
+                ck = ck + x.decode("utf-8") # change for Python3
+                byteCount += 1
+                x = ser.read()
 
     return(ck)
 
