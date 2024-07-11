@@ -142,15 +142,49 @@ def get_temperature(data):                                  #outside temp conver
     return '{:.2f}'.format(data["main"]["temp"]) + ' C'
 
 def run_temperature_display(url):                           #Set lcd preferences also this function uses variables url, mcp, lcd, city
-
     while(True):                                            #constantly run request and save it to variable data
-        response = requests.get(url)
+        response = Update(url)
         data = json.loads(response.text)
 
         temp1 = get_temperature(data)
-
-        time.sleep(5)                                       # Important to have some delay, since API calls can only be made 1000 per day.
+      # time.sleep(5)                                       # Important to have some delay, since API calls can only be made 1000 per day.
         return temp1
+
+
+CurrentTime = time.monotonic()
+AccumDiff = 0
+
+def Update(url):
+    global CurrentTime
+    global AccumDiff
+
+    LastTime = CurrentTime            # Store previous frame time
+    CurrentTime = time.monotonic()    # Get the current frame time
+    TimeDiff = CurrentTime - LastTime # Calculate the difference
+    AccumDiff += TimeDiff             # Accumulate the difference in time
+
+    # Do something every second
+    if AccumDiff >= 60.0: # A second passed!
+       # Overtime = AccumDiff - 1.0 # (optional) Respond to overtime
+       # print("This print is delayed by:", Overtime ,"Seconds!")  
+        
+        # Reset our accumulated time
+        AccumDiff = 0
+        # Do something every X seconds
+        print("Printing............")
+        response = requests.get(url)
+
+        return response
+
+
+   # else: # A second has not passed yet.
+        # Continue accumulating time (pass or do something in response)
+      #  print("Not gonna print yet.")
+
+
+
+
+
 
 
 #======================================
@@ -180,8 +214,6 @@ startMarker = 60
 endMarker = 62
 start = "<"
 location = city.translate(specialCharacterMap)
-
-
 
 #initialializing temp values
 
