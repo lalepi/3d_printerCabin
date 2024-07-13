@@ -3,3 +3,4 @@ WiringPi
 gpiozero
 requests
 python-dotenv
+schedule

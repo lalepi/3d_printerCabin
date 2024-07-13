@@ -12,6 +12,7 @@ import serial
 import time
 import requests
 import json
+import schedule
 
 import os
 from dotenv import load_dotenv
@@ -138,54 +139,90 @@ city = os.getenv('city')
 url = "https://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s&units=metric" % (city, api_key)  #Get city and units from api
 
 
-def get_temperature(data):                                  #outside temp convert to float also determine under which topics data can be found in API request
-    return '{:.2f}'.format(data["main"]["temp"]) + ' C'
-
-def run_temperature_display(url):                           #Set lcd preferences also this function uses variables url, mcp, lcd, city
-    while(True):                                            #constantly run request and save it to variable data
-        response = Update(url)
-        data = json.loads(response.text)
-
-        temp1 = get_temperature(data)
-      # time.sleep(5)                                       # Important to have some delay, since API calls can only be made 1000 per day.
-        return temp1
 
 
-CurrentTime = time.monotonic()
-AccumDiff = 0
+#def get_temperature(weatherdata):
+#    print ("weatherdata is: ", weatherdata)
+#    if weatherdata != null:                                  #outside temp convert to float also determine under which topics data can be found in API request
+ #   cityTemperature = '{:.2f}'.format(weatherdata["main"]["temp"]) + ' C'
 
-def Update(url):
-    global CurrentTime
-    global AccumDiff
+#    else:
+#       cityTemperature = 0.0
 
-    LastTime = CurrentTime            # Store previous frame time
-    CurrentTime = time.monotonic()    # Get the current frame time
-    TimeDiff = CurrentTime - LastTime # Calculate the difference
-    AccumDiff += TimeDiff             # Accumulate the difference in time
+  #  print ("cityTemperature is: ", cityTemperature)
 
-    # Do something every second
-    if AccumDiff >= 60.0: # A second passed!
-       # Overtime = AccumDiff - 1.0 # (optional) Respond to overtime
-       # print("This print is delayed by:", Overtime ,"Seconds!")  
-        
-        # Reset our accumulated time
-        AccumDiff = 0
-        # Do something every X seconds
-        print("Printing............")
-        response = requests.get(url)
-
-        return response
+#    return cityTemperature
 
 
-   # else: # A second has not passed yet.
-        # Continue accumulating time (pass or do something in response)
-      #  print("Not gonna print yet.")
+
+def RetvieweWeather(url):
+    print("I'm working...")
+    response = requests.get(url)
+    weatherdata = json.loads(response.text)
+    cityTemperature = '{:.2f}'.format(weatherdata["main"]["temp"]) + ' C'
+
+    print ("Retview", cityTemperature)
+
+    return cityTemperature
 
 
 
 
+Initialweather = RetvieweWeather(url)
 
 
+def SaveWeather():
+
+    global Initialweather
+    result = RetvieweWeather(url)
+
+    print("insideSaveWeather", Initialweather)
+
+
+    if Initialweather is not None:
+        # Compare with the previous result
+        if result > Initialweather:
+            print(f"New result ({result}) is greater than previous result ({Initialweather})")
+        elif result < Initialweather:
+            print(f"New result ({result}) is less than previous result ({Initialweather})")
+        else:
+            print(f"New result ({result}) is equal to previous result ({Initialweather})")
+
+    Initialweather = result
+
+schedule.every(1).minutes.do(SaveWeather)
+
+
+#def InitialWeather():
+#    cityTemperature = RetvieweWeather(url)
+#    print ("initialcitytemp", cityTemperature)
+#    return cityTemperature
+
+
+#weather = result
+
+
+
+#print("weather", weather)
+
+
+
+
+#def updateWeather(previous_result):
+
+ #   print ("weather", weather)
+#    print ("previousresult", previous_result)
+
+
+#schedule.every(15).seconds.do(updateWeather)
+
+
+
+
+
+#def run_temperature_display(data):                           #Set lcd preferences also this function uses variables url, mcp, lcd, city
+#    while(True):                                            #constantly run request and save it to variable data#
+#        return get_temperature(data)                                     # Important to have some delay, since API calls can only be made 1000 per day.
 
 #======================================
 
@@ -270,17 +307,28 @@ if __name__ == '__main__':
     ser = serial.Serial('/dev/ttyACM1', 115200, timeout=1)
     ser.reset_input_buffer()
 
-    while True:
 
-     run_temperature_display(url)
+
+    #cityTemperature = weather
+
+    while True:
+     print ("in main previous_result", Initialweather)
+#     print ("updateWeather", updateWeather())
+#     print (RetvieweWeather(url))
+
+#     SaveWeather()
      cpu = CPUTemperature().temperature
      cpu_temp = round(cpu, 1)                            # rounding to 1 decimal
      temp = cpu_temp
 
-     temp1 = run_temperature_display(url)
+     temp1 = 12
 
      runTest(start, location, temp, temp1, ending)
+
+     schedule.run_pending()
+
 
      time.sleep(1)
 
      ser.close
+
