@@ -11,9 +11,6 @@ This project is designed to monitor and control the environment inside a 3D prin
 - **3d_printerCabin/measurements/arduinoSide/arduinoSide.ino**: Arduino sketch for measuring temperature and humidity.
 - **3d_printerCabin/measurements/readMeasurements.py**: Python script to read measurements from the Arduino and fetch external temperature data.
 - **3d_printerCabin/measurements/requirements.txt**: Python dependencies for the project.
-- **.env**: Environment variables file (not included in version control).
-- **devicenames.txt**: Device names file (not included in version control).
-- **test.ipynb**: Jupyter notebook for testing purposes.
 
 ## Getting Started
 
